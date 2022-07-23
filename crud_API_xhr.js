@@ -38,9 +38,9 @@ $('#postBtn').on('click', function(){
     let _name = prompt("Enter your name..") ?? "";
     let username = prompt("Enter username..") ?? "";
     let email = prompt("Enter your email..") ?? "";
-    if(_name != "" && username != "" && email != ""){
+    if((_name).trim() != "" && (username).trim() != "" && (email).trim() != ""){
         newPost({name:_name, username, email});
-    } else if(_name != "" || username != "" || email != "") {
+    } else if((_name).trim() == "" || (username).trim() == "" || (email).trim() == "") {
         alert("Please enter all input fields to create users.");
     }else {
         alert("Nothing to created.");
@@ -74,11 +74,8 @@ function postUpdate(t_this){
 // Fetch request
 function fetch(){
     xhr.onload = ()=>{
-        if(xhr.status >=200 && xhr.status <=299){
-            showUserDetails(JSON.parse(xhr.response));
-        } else{
-            alert("error : somethig  went wrong");
-        }
+        xhr.status >=200 && xhr.status <=299) ? showUserDetails(JSON.parse(xhr.response))
+        :alert("error : somethig  went wrong");
     };
     xhr.open("GET", `${url}users`);
     xhr.send();
@@ -91,9 +88,8 @@ function newPost(postData){
         if(xhr.status >=200 && xhr.status <=299){
             showUserDetails([JSON.parse(xhr.response)]);
             alert("Created Successfully.")
-        }else{
-            alert("error : somethig  went wrong"); 
         }
+        else alert("error : somethig  went wrong"); 
     }
 
     xhr.open("POST", `${url}users`);
@@ -109,9 +105,8 @@ function updateRequest(data, id){
         if(xhr.status >= 200 && xhr.status <=299){
             showUserDetails(JSON.parse(xhr.response), true);
             alert("Updated Successfully");
-        } else{
-            alert("Something went wrong");
-        }
+        } 
+        else alert("Something went wrong");
     }
 
     xhr.open("PUT", `${url}posts/${id}`);
@@ -127,8 +122,7 @@ function postRemove(t_this){
         if(xhr.status >= 200 && xhr.status <= 299){
             $('#'+deleteId).remove();
             alert("deleted successfully.");
-        } else
-            alert("something went wrong");
+        } else alert("something went wrong");
     }
     xhr.open("DELETE",`${url}users/${deleteId}`);
     xhr.send();
